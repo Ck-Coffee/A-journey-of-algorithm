@@ -1,0 +1,88 @@
+/**
+ * 翻转链表中第m个节点到第n个节点的部分
+ *
+ *注意事项
+ *	m，n满足1 ≤ m ≤ n ≤ 链表长度
+ *例：给出链表1->2->3->4->5->null， m = 2 和n = 4，返回1->4->3->2->5->null
+ */
+package edu.Tensor.fourth;
+class ListNode {
+    int val;
+    ListNode next;
+      ListNode(int x) {
+         val = x;
+         next = null;
+     }
+  }
+
+public class Reverse {
+    public  static ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head==null || m<1 || m>=n ){
+            return head;
+        }
+        ListNode pNode = head;
+        //记录m-1,m处的节点
+        ListNode m_1Node,mNode;
+        //找到开始翻转的节点的前驱节点
+        for(int i=1;i<m-1;++i,pNode=pNode.next);
+        //记录m-1处的节点
+        if(m!=1){
+            m_1Node=pNode;
+            pNode=mNode=pNode.next;
+        }else{
+            m_1Node=null;
+            mNode=pNode;
+        }
+        //从m节点开始翻转
+
+        ListNode nextNode,qNode;
+        qNode=null;
+        nextNode=pNode;
+        int j = m;
+        while(j<=n && pNode!=null){
+
+            if(pNode==null){
+                break;
+            }
+            nextNode = pNode.next;
+            pNode.next = qNode;
+            qNode = pNode;
+            pNode=nextNode;
+            ++j;
+        }
+        if(j!=n+1){
+            return null;
+        }
+        //重新挂链
+        if(m_1Node==null){
+            head=qNode;
+            mNode.next=pNode;
+        }else{
+            m_1Node.next=qNode;
+            mNode.next=pNode;
+        }
+
+        return head;
+    }
+
+
+    public  static ListNode createList(int [] arr){
+        ListNode head = new ListNode(arr[0]);
+        ListNode pNode,qNode;
+        qNode = head;
+        for(int i=1;i<arr.length;++i){
+            pNode = new ListNode(arr[i]);
+            qNode.next=pNode;
+            qNode=pNode;
+        }
+        return head;
+    }
+    public static void main(String[] args) {
+        int [] arr = {1,2,3,4,5,6,7,8};
+        ListNode listNode=createList(arr);
+        listNode=reverseBetween(listNode,1,7);
+        for(ListNode node=listNode;node!=null;node=node.next){
+            System.out.println(node.val);
+        }
+    }
+}
