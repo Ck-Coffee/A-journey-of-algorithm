@@ -1,0 +1,43 @@
+/**
+ *问题:设计一种方法，通过给重复字符计数来进行基本的字符串压缩。例如，字符串 aabcccccaaa 可压缩为
+ * a2b1c5a3。而如果压缩后的字符数不小于原始的字符数，则返回原始的字符串。可以假设字符串仅包括a-z的字母。
+ * 
+ * 样例:str=aabcccccaaa 返回 a2b1c5a3
+ *       str=aabbcc 返回 aabbcc
+ *       str=aaaa 返回 a4
+ * 
+ * 思路:简单的遍历，统计字符个数，最后比较压缩的结果，决定输出对象
+ */
+ 
+public class Solution {
+    /**
+     * @param str: a string
+     * @return: a compressed string
+     */
+    public String compress(String str) {
+        // write your code here
+        if(str == null || str.length() == 0){
+            return str;
+        }
+        int len=str.length();
+        StringBuffer conpress = new StringBuffer();
+        conpress.append(str.charAt(0));
+        int num = 1;
+        for(int i=1;i<len;++i){
+            char curr = str.charAt(i);
+            if(conpress.charAt(conpress.length()-1) == curr){
+                num ++ ;
+            }else{
+                conpress.append(num);
+                conpress.append(curr);
+                num = 1;
+            }
+        }
+        conpress.append(num);
+        if(conpress.length()<len){
+            str = conpress.toString(); 
+        }
+        return str;
+        
+    }
+}
