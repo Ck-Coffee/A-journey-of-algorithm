@@ -1,0 +1,47 @@
+/**
+ * 问题：给定一个数T，若满足X * Y = T ，且X为奇数，Y为偶数，则输出X，Y
+ * 要求：若满足要求的解不止一组，则输出Y最小的一组解
+ * 思路：先判断当前数是否为偶数，再进行下一步判断，不是输出“No”，是则从2开始计算，直到满足题目要求的解出现（每次增2），
+ *      并设立一个标示位，记录跳出循环的方式
+ *      
+ *      例：输入：10          输出：5，2
+ *                 5                  No
+ */
+
+import java.util.*;
+
+public class FindXY {
+    public static void findXAndY(long [] arr){
+        if(arr == null || arr.length == 0){
+            return ;
+        }
+        int len = arr.length;
+        for(int i=0;i<len;++i){
+            if(arr[i]%2 == 1){
+                System.out.println("No");
+            }else{
+                boolean flag = true;
+                for(int j=2;j<arr[i];j=j+2){
+                    long temp = arr[i]/j;
+                    if(temp*j == arr[i] && temp%2 ==1){
+                        System.out.println(temp+" "+j);
+                        flag =false;
+                        break;
+                    }
+                }
+                if(flag){
+                    System.out.println("No");
+                }
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        long [] arr = new long[n];
+        for(int i = 0;i< n ;++i){
+            arr[i] = in.nextLong();
+        }
+        findXAndY(arr);
+    }
+}
